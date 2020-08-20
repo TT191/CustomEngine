@@ -24,7 +24,8 @@
  ****************************************************************************/
 
 import TTFAssembler from '../../../../utils/label/ttf';
-
+const Label = require('../../../../../components/CCLabel');
+const Overflow = Label.Overflow;
 const LabelShadow = require('../../../../../components/CCLabelShadow');
 const WHITE = cc.color(255, 255, 255, 255);
 
@@ -51,8 +52,8 @@ export default class WebglTTFAssembler extends TTFAssembler {
 
     updateVerts (comp) {
         let node = comp.node,
-            canvasWidth = comp._ttfTexture.width,
-            canvasHeight = comp._ttfTexture.height,
+            canvasWidth = comp._ttfTexture.width / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1),
+            canvasHeight = comp._ttfTexture.height / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1),
             appx = node.anchorX * node.width,
             appy = node.anchorY * node.height;
 
@@ -98,4 +99,3 @@ export default class WebglTTFAssembler extends TTFAssembler {
         this.updateWorldVerts(comp);
     }
 }
-

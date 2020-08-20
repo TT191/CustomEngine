@@ -43169,7 +43169,8 @@
       SHOW_MESH_WIREFRAME: false,
       SHOW_MESH_NORMAL: false,
       ENABLE_MULTI_TOUCH: true,
-      ALLOW_IMAGE_BITMAP: true
+      ALLOW_IMAGE_BITMAP: true,
+      TTF_OBVIOUS_SCALE: 2
     };
     Object.defineProperty(cc.macro, "ROTATE_ACTION_CCW", {
       set: function set(value) {
@@ -49277,6 +49278,8 @@
         this._updateTexture(comp);
         this._calDynamicAtlas(comp);
         comp._actualFontSize = _fontSize;
+        _nodeContentSize.width = _nodeContentSize.width / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
+        _nodeContentSize.height = _nodeContentSize.height / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
         comp.node.setContentSize(_nodeContentSize);
         this.updateVerts(comp);
         comp._vertsDirty = false;
@@ -49317,14 +49320,14 @@
         _canvas = assemblerData.canvas;
         _texture = comp._frame._original ? comp._frame._original._texture : comp._frame._texture;
         _string = comp.string.toString();
-        _fontSize = comp._fontSize;
+        _fontSize = comp._fontSize * (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
         _drawFontSize = _fontSize;
         _underlineThickness = comp.underlineHeight || _drawFontSize / 8;
         _overflow = comp.overflow;
-        _canvasSize.width = comp.node.width;
-        _canvasSize.height = comp.node.height;
+        _canvasSize.width = comp.node.width * (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
+        _canvasSize.height = comp.node.height * (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
         _nodeContentSize = comp.node.getContentSize();
-        _lineHeight = comp._lineHeight;
+        _lineHeight = comp._lineHeight * (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
         _hAlign = comp.horizontalAlign;
         _vAlign = comp.verticalAlign;
         _color = comp.node.color;
@@ -51186,6 +51189,8 @@
       subClass.prototype.constructor = subClass;
       subClass.__proto__ = superClass;
     }
+    var Label = require("../../../../../components/CCLabel");
+    var Overflow = Label.Overflow;
     var LabelShadow = require("../../../../../components/CCLabelShadow");
     var WHITE = cc.color(255, 255, 255, 255);
     var WebglTTFAssembler = (function(_TTFAssembler) {
@@ -51212,7 +51217,7 @@
         _TTFAssembler.prototype.updateColor.call(this, comp, color);
       };
       _proto.updateVerts = function updateVerts(comp) {
-        var node = comp.node, canvasWidth = comp._ttfTexture.width, canvasHeight = comp._ttfTexture.height, appx = node.anchorX * node.width, appy = node.anchorY * node.height;
+        var node = comp.node, canvasWidth = comp._ttfTexture.width / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1), canvasHeight = comp._ttfTexture.height / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1), appx = node.anchorX * node.width, appy = node.anchorY * node.height;
         var shadow = LabelShadow && comp.getComponent(LabelShadow);
         if (shadow && shadow._enabled) {
           var offsetX = (canvasWidth - node.width) / 2;
@@ -51234,6 +51239,7 @@
     exports["default"] = WebglTTFAssembler;
     module.exports = exports["default"];
   }), {
+    "../../../../../components/CCLabel": 182,
     "../../../../../components/CCLabelShadow": 184,
     "../../../../utils/label/ttf": 327
   } ],
