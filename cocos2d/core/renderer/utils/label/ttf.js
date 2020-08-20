@@ -242,6 +242,7 @@ export default class TTFAssembler extends Assembler2D {
     _setupOutline () {
         _context.strokeStyle = `rgba(${_outlineColor.r}, ${_outlineColor.g}, ${_outlineColor.b}, ${_outlineColor.a / 255})`;
         _context.lineWidth = _outlineComp.width * 2;
+        _context.lineJoin = 'round';
     }
 
     _setupShadow () {

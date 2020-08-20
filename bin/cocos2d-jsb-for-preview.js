@@ -49366,6 +49366,7 @@
       _proto._setupOutline = function _setupOutline() {
         _context.strokeStyle = "rgba(" + _outlineColor.r + ", " + _outlineColor.g + ", " + _outlineColor.b + ", " + _outlineColor.a / 255 + ")";
         _context.lineWidth = 2 * _outlineComp.width;
+        _context.lineJoin = "round";
       };
       _proto._setupShadow = function _setupShadow() {
         _context.shadowColor = "rgba(" + _shadowColor.r + ", " + _shadowColor.g + ", " + _shadowColor.b + ", " + _shadowColor.a / 255 + ")";
