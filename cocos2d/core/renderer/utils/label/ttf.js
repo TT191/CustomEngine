@@ -243,15 +243,15 @@ export default class TTFAssembler extends Assembler2D {
 
     _setupOutline () {
         _context.strokeStyle = `rgba(${_outlineColor.r}, ${_outlineColor.g}, ${_outlineColor.b}, ${_outlineColor.a / 255})`;
-        _context.lineWidth = _outlineComp.width * 2;
+        _context.lineWidth = _outlineComp.width * 2 * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
         _context.lineJoin = 'round';
     }
 
     _setupShadow () {
         _context.shadowColor = `rgba(${_shadowColor.r}, ${_shadowColor.g}, ${_shadowColor.b}, ${_shadowColor.a / 255})`;
-        _context.shadowBlur = _shadowComp.blur;
-        _context.shadowOffsetX = _shadowComp.offset.x;
-        _context.shadowOffsetY = -_shadowComp.offset.y;
+        _context.shadowBlur = _shadowComp.blur * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
+        _context.shadowOffsetX = _shadowComp.offset.x * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
+        _context.shadowOffsetY = -_shadowComp.offset.y * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
     }
 
     _drawTextEffect (startPosition, lineHeight) {

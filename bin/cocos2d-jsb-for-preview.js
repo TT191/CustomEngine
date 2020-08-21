@@ -49368,14 +49368,14 @@
       };
       _proto._setupOutline = function _setupOutline() {
         _context.strokeStyle = "rgba(" + _outlineColor.r + ", " + _outlineColor.g + ", " + _outlineColor.b + ", " + _outlineColor.a / 255 + ")";
-        _context.lineWidth = 2 * _outlineComp.width;
+        _context.lineWidth = 2 * _outlineComp.width * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
         _context.lineJoin = "round";
       };
       _proto._setupShadow = function _setupShadow() {
         _context.shadowColor = "rgba(" + _shadowColor.r + ", " + _shadowColor.g + ", " + _shadowColor.b + ", " + _shadowColor.a / 255 + ")";
-        _context.shadowBlur = _shadowComp.blur;
-        _context.shadowOffsetX = _shadowComp.offset.x;
-        _context.shadowOffsetY = -_shadowComp.offset.y;
+        _context.shadowBlur = _shadowComp.blur * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
+        _context.shadowOffsetX = _shadowComp.offset.x * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
+        _context.shadowOffsetY = -_shadowComp.offset.y * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
       };
       _proto._drawTextEffect = function _drawTextEffect(startPosition, lineHeight) {
         if (!_shadowComp && !_outlineComp && !_enableUnderline) return;
