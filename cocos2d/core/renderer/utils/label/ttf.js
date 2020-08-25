@@ -109,8 +109,8 @@ export default class TTFAssembler extends Assembler2D {
         this._calDynamicAtlas(comp);
 
         comp._actualFontSize = _fontSize;
-        _nodeContentSize.width = _nodeContentSize.width / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
-        _nodeContentSize.height = _nodeContentSize.height / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1);
+        _nodeContentSize.width = _nodeContentSize.width / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1) + (_outlineComp ? _outlineComp.width * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1) : 0);
+        _nodeContentSize.height = _nodeContentSize.height / (comp.overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1) + (_outlineComp ? _outlineComp.width * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1) : 0);
         comp.node.setContentSize(_nodeContentSize);
 
         this.updateVerts(comp);
@@ -348,8 +348,8 @@ export default class TTFAssembler extends Assembler2D {
     }
 
     _updateLabelDimensions () {
-        _canvasSize.width = Math.min(_canvasSize.width, MAX_SIZE);
-        _canvasSize.height = Math.min(_canvasSize.height, MAX_SIZE);
+        _canvasSize.width = Math.min(_canvasSize.width, MAX_SIZE) + (_outlineComp ? _outlineComp.width * 2 * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1) : 0);
+        _canvasSize.height = Math.min(_canvasSize.height, MAX_SIZE) + (_outlineComp ? _outlineComp.width * 2 * (_overflow == Overflow.NONE ? cc.macro.TTF_OBVIOUS_SCALE : 1) : 0);
 
         let recreate = false;
         if (_canvas.width !== _canvasSize.width) {
