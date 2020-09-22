@@ -30464,6 +30464,9 @@
       setCurrentPageIndex: function setCurrentPageIndex(index) {
         this.scrollToPage(index, true);
       },
+      getTouchEndPosition: function getTouchEndPosition() {
+        return this._touchEndPosition;
+      },
       getPages: function getPages() {
         return this._pages;
       },

@@ -273,6 +273,10 @@ var PageView = cc.Class({
         this.scrollToPage(index, true);
     },
 
+    getTouchEndPosition: function() {
+        return this._touchEndPosition;
+    },
+
     /**
      * !#en Returns all pages of pageview
      * !#zh 返回视图中的所有页面
