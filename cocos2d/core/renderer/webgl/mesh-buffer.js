@@ -25,6 +25,8 @@
 
 import gfx from '../../../renderer/gfx';
 
+const isIOS14Device = cc.sys.os === cc.sys.OS_IOS && cc.sys.isBrowser && cc.sys.isMobile && /iPhone OS 14/.test(window.navigator.userAgent);
+
 let MeshBuffer = cc.Class({
     name: 'cc.MeshBuffer',
     ctor (batcher, vertexFormat) {
@@ -135,7 +137,9 @@ let MeshBuffer = cc.Class({
         if (this.vertexOffset + vertexCount > 65535) {
             this.uploadData();
             this._batcher._flush();
-            this.switchBuffer();
+             if (!isIOS14Device) {
+                this.switchBuffer();
+            }
         }
     },
 
@@ -254,8 +258,27 @@ let MeshBuffer = cc.Class({
     },
 
     forwardIndiceStartToOffset () {
-        this.indiceStart = this.indiceOffset;
+        if (!isIOS14Device) {
+            this.indiceStart = this.indiceOffset;
+        }
+        else {
+            this.uploadData();
+            this.switchBuffer();
+        }
     }
 });
+
+if (isIOS14Device) {
+    MeshBuffer.prototype.checkAndSwitchBuffer = function (vertexCount) {
+        if (this.vertexOffset + vertexCount > 65535) {
+            this.uploadData();
+            this._batcher._flush();
+        }
+    };     
+    MeshBuffer.prototype.forwardIndiceStartToOffset = function () {
+        this.uploadData();
+        this.switchBuffer();
+    }  
+}
 
 cc.MeshBuffer = module.exports = MeshBuffer;
