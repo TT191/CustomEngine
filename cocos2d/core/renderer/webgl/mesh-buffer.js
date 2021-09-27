@@ -25,7 +25,7 @@
 
 import gfx from '../../../renderer/gfx';
 
-const isIOS14Device = cc.sys.os === cc.sys.OS_IOS && cc.sys.isBrowser && cc.sys.isMobile && /iPhone OS 14/.test(window.navigator.userAgent);
+const isIOS14UpDevice = cc.sys.os === cc.sys.OS_IOS && cc.sys.isBrowser && cc.sys.isMobile && /iPhone OS 1/.test(window.navigator.userAgent);
 
 let MeshBuffer = cc.Class({
     name: 'cc.MeshBuffer',
@@ -137,7 +137,7 @@ let MeshBuffer = cc.Class({
         if (this.vertexOffset + vertexCount > 65535) {
             this.uploadData();
             this._batcher._flush();
-             if (!isIOS14Device) {
+             if (!isIOS14UpDevice) {
                 this.switchBuffer();
             }
         }
@@ -258,7 +258,7 @@ let MeshBuffer = cc.Class({
     },
 
     forwardIndiceStartToOffset () {
-        if (!isIOS14Device) {
+        if (!isIOS14UpDevice) {
             this.indiceStart = this.indiceOffset;
         }
         else {
@@ -275,7 +275,7 @@ let MeshBuffer = cc.Class({
 // Hack iOS 14 buffer switching mechanism #7415
 
 
-if (isIOS14Device) {
+if (isIOS14UpDevice) {
     MeshBuffer.prototype.checkAndSwitchBuffer = function (vertexCount) {
         if (this.vertexOffset + vertexCount > 65535) {
             this.uploadData();
