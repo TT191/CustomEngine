@@ -25,7 +25,7 @@
 
 import gfx from '../../../renderer/gfx';
 
-const isIOS14UpDevice = cc.sys.os === cc.sys.OS_IOS && cc.sys.isBrowser && cc.sys.isMobile && /iPhone OS 1/.test(window.navigator.userAgent);
+const isIOS14UpDevice = cc.sys.os === cc.sys.OS_IOS && cc.sys.isBrowser && cc.sys.isMobile && /iPhone OS 1[4|5]/.test(window.navigator.userAgent);
 
 let MeshBuffer = cc.Class({
     name: 'cc.MeshBuffer',
