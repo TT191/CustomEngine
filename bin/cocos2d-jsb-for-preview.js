@@ -43959,7 +43959,7 @@
         return frame.clientWidth;
       };
       __BrowserGetter.availHeight = function(frame) {
-        return frame.clientHeight;
+        return window.innerHeight;
       };
     }
     var _scissorRect = null;
@@ -53016,7 +53016,8 @@
         default: obj
       };
     }
-    var isIOS14Device = cc.sys.os === cc.sys.OS_IOS && cc.sys.isBrowser && cc.sys.isMobile && /iPhone OS 14/.test(window.navigator.userAgent);
+    var isIPad = /iPad/.test(navigator.platform) || "MacIntel" === navigator.platform && navigator.maxTouchPoints > 1;
+    var isIOS14UpDevice = isIPad || cc.sys.os === cc.sys.OS_IOS && cc.sys.isBrowser && cc.sys.isMobile && /iPhone OS 1[4|5]/.test(window.navigator.userAgent);
     var MeshBuffer = cc.Class({
       name: "cc.MeshBuffer",
       ctor: function ctor(batcher, vertexFormat) {
@@ -53080,7 +53081,7 @@
         if (this.vertexOffset + vertexCount > 65535) {
           this.uploadData();
           this._batcher._flush();
-          isIOS14Device || this.switchBuffer();
+          isIOS14UpDevice || this.switchBuffer();
         }
       },
       requestStatic: function requestStatic(vertexCount, indiceCount) {
@@ -53164,13 +53165,13 @@
         this._vb = null;
       },
       forwardIndiceStartToOffset: function forwardIndiceStartToOffset() {
-        if (isIOS14Device) {
+        if (isIOS14UpDevice) {
           this.uploadData();
           this.switchBuffer();
         } else this.indiceStart = this.indiceOffset;
       }
     });
-    if (isIOS14Device) {
+    if (isIOS14UpDevice) {
       MeshBuffer.prototype.checkAndSwitchBuffer = function(vertexCount) {
         if (this.vertexOffset + vertexCount > 65535) {
           this.uploadData();
