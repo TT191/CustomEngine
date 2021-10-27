@@ -64,7 +64,11 @@ switch (__BrowserGetter.adaptationType) {
             return frame.clientWidth;
         };
         __BrowserGetter.availHeight = function(frame){
-            return frame.clientHeight;
+            //*159
+            //Fixed issue of changing orientation to landscape not fullscreen on iphone 12 pro
+            //frame.clientHeight -> window.innerHeight
+            return window.innerHeight;
+            // return frame.clientHeight;
         };
         break;
 }
